@@ -20,8 +20,7 @@ class AjoutFichierType extends AbstractType
         'choice_label'=>function($utilisateur){
             return $utilisateur->getNom().' '.$utilisateur->getPrenom();
         }))
-        ->add('theme', EntityType::class, array('class'=>'App\Entity\Theme',
-        'choice_label'=>'nom', 'mapped' => false))
+        //->add('theme', EntityType::class, array('class'=>'App\Entity\Theme','choice_label'=>'nom', 'mapped' => false))
         ->add('themes', EntityType::class, array('label' => 'Thèmes à relier', 'class' =>'App\Entity\Theme','choice_label'=>'nom','expanded' => true, 'multiple' => true))
         ->add('valider', SubmitType::class);
     }

@@ -30,12 +30,12 @@
 				{{ form_widget(form.utilisateur, {'attr': {'class': 'form-control m-1'}}) }}
 			</div>
 			<div class="form-group">
-				{{ form_label(form.theme, 'Thèmes : ', {'label_attr': {'class': 'fw-bold m-1'}}) }}
+				{{ form_label(form.themes, 'Thèmes : ', {'label_attr': {'class': 'fw-bold m-1'}}) }}
 
-				{% for theme in form.themes |sort((a, b) => a.vars.label <=> b.vars.label) %}
+				{% for themes in form.themes |sort((a, b) => a.vars.label <=> b.vars.label) %}
 
-					{{ form_label(theme, '' ,{'label_attr': {'class': 'fw-bold m-1'}}) }}
-					{{ form_widget(theme, {'attr': {'class': ''}}) }}
+					{{ form_label(themes, '' ,{'label_attr': {'class': 'fw-bold m-1'}}) }}
+					{{ form_widget(themes, {'attr': {'class': ''}}) }}
 				{% endfor %}
 			</div>
 			<div class="form-group mx-auto text-center">

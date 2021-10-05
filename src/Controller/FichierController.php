@@ -26,8 +26,8 @@ class FichierController extends AbstractController
           $form->handleRequest($request);
           if ($form->isSubmitted() && $form->isValid()){
 
-            $idTheme = $form->get('theme')->getData();
-            $theme = $this->getDoctrine()->getRepository(Theme::class)->find($idTheme);
+            //$idTheme = $form->get('theme')->getData();
+            //$theme = $this->getDoctrine()->getRepository(Theme::class)->find($idTheme);
               
             // Récupération du fichier
             $fichierPhysique = $fichier->getNom();
@@ -42,7 +42,7 @@ class FichierController extends AbstractController
             $fichier->setExtension($ext);
             $fichier->setTaille($fichierPhysique->getSize());
             $fichier->setNom(md5(uniqid()));
-            $fichier->addTheme($theme);
+            //$fichier->addTheme($theme);
             try{
               $fichierPhysique->move($this->getParameter('file_directory'), $fichier->getNom());
               $this->addFlash('notice', 'Fichier envoyé');
