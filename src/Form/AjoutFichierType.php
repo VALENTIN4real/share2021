@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Fichier;
 
 class AjoutFichierType extends AbstractType
 {
@@ -28,6 +29,7 @@ class AjoutFichierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'data_class' => Fichier::class
             // Configure your form options here
         ]);
     }
