@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Fichier;
 
 class AjoutFichierType extends AbstractType
 {
@@ -16,15 +17,18 @@ class AjoutFichierType extends AbstractType
         $builder
         ->add('nom', FileType::class, array('label' => 'Fichier à télécharger'))
         ->add('utilisateur', EntityType::class, array('class'=>'App\Entity\Utilisateur',
-        'choice_label'=>'nom'))
-        ->add('theme', EntityType::class, array('class'=>'App\Entity\Theme',
-        'choice_label'=>'nom', 'mapped' => false))
+        'choice_label'=>function($utilisateur){
+            return $utilisateur->getNom().' '.$utilisateur->getPrenom();
+        }))
+        //->add('theme', EntityType::class, array('class'=>'App\Entity\Theme','choice_label'=>'nom', 'mapped' => false))
+        ->add('themes', EntityType::class, array('label' => 'Thèmes à relier', 'class' =>'App\Entity\Theme','choice_label'=>'nom','expanded' => true, 'multiple' => true))
         ->add('valider', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'data_class' => Fichier::class
             // Configure your form options here
         ]);
     }
