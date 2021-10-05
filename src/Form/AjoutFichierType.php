@@ -16,9 +16,12 @@ class AjoutFichierType extends AbstractType
         $builder
         ->add('nom', FileType::class, array('label' => 'Fichier à télécharger'))
         ->add('utilisateur', EntityType::class, array('class'=>'App\Entity\Utilisateur',
-        'choice_label'=>'nom'))
+        'choice_label'=>function($utilisateur){
+            return $utilisateur->getNom().' '.$utilisateur->getPrenom();
+        }))
         ->add('theme', EntityType::class, array('class'=>'App\Entity\Theme',
         'choice_label'=>'nom', 'mapped' => false))
+        ->add('themes', EntityType::class, array('label' => 'Thèmes à relier', 'class' =>'App\Entity\Theme','choice_label'=>'nom','expanded' => true, 'multiple' => true))
         ->add('valider', SubmitType::class);
     }
 
