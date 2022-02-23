@@ -30,9 +30,9 @@ class Utilisateur
     private $prenom;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="string", length=100)
      */
-    private $dateNaissance;
+    private $email;
 
     /**
      * @ORM\Column(type="date")
@@ -85,14 +85,14 @@ class Utilisateur
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
+    public function getEmail(): ?string
     {
-        return $this->dateNaissance;
+        return $this->email;
     }
 
-    public function setDateNaissance(\DateTimeInterface $dateNaissance): self
+    public function setEmail(string $email): self
     {
-        $this->dateNaissance = $dateNaissance;
+        $this->email = $email;
 
         return $this;
     }

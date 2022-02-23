@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Contact;
 use App\Entity\Commentaire;
 use App\Entity\Utilisateur;
+use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class StaticController extends AbstractController
 {
@@ -21,24 +23,36 @@ class StaticController extends AbstractController
         return $this->render('static/accueil.html.twig', []);
     }
 
-    #[Route('/inscription', name: 'inscription')]
-    public function inscription(Request $request): Response
-    {   
+    #[Route('/inscriptionComplete', name: 'inscriptionComplete')]
+    public function inscriptionComplete(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        //chien de martin
         $utilisateur = new Utilisateur();
+        $user = new User();
+        $utilisateur->setUserData($user);
+        $user->setUtilisateurData($utilisateur);
         $form = $this->createForm(InscriptionType::class,$utilisateur);
-
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')){
             $form->handleRequest($request);
-            if($form->isSubmitted() && $form->isValid()){
-                $this->addFlash('notice','Inscription réussie');
+            if($form->isSubmitted()&&$form->isValid()){
+
+                $user->setEmail($form->get('email')->getData());
+                $user->setPassword($passwordHasher->hashPassword($user,$form->get('password')->getData()));
+                $user->setRoles(array('ROLE_USER'));
 
                 $em = $this->getDoctrine()->getManager();
+
                 $em->persist($utilisateur);
+                $em->persist($user);
+
                 $em->flush();
-                return $this->redirectToRoute('inscription');
+                return $this->redirectToRoute('inscriptionComplete');
             }
         }
-        return $this->render('static/inscription.html.twig', ['form'=>$form->createView()]);
+
+        return $this->render('static/inscriptionComplete.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/listeContact', name: 'listeContact')]
